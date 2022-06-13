@@ -13,13 +13,22 @@
         <br>
         <label for="cableLenghtInput">atsumas tarp interneto routerio ir kameros</label>
         <br>
-        <input type="number" name="cableLenghtInput" id="cableLenghtInput" value="10" oninput="calculatePrice()" />
+        <input type="number" name="cableLenghtInput" id="cableLenghtInput" value="50" oninput="calculatePrice()" />
         <br>
         <select name="Mpx amount" id="mpxInput" oninput="calculatePrice()">
             <option value="2">2Mpx</option>
             <option value="4">4Mpx</option>
-            <option value="5">5Mpx</option>
             <option value="8">8Mpx</option>
+        </select>
+        <br>
+        <!-- Change to days selection -->
+        <select name="TbAmount" id="TbAmount" oninput="calculatePrice()">
+            <option value="1">1Tb</option>
+            <option value="2">2Tb</option>
+            <option value="4">4Tb</option>
+            <option value="8">8Tb</option>
+            <option value="16">16Tb</option>
+            <option value="32">32Tb</option>
         </select>
         <br>
         <input type="checkbox" id="AIinput" name="AIinput" value="AI" oninput="calculatePrice()">
@@ -27,6 +36,9 @@
         <br>
         <input type="checkbox" id="ColorInput" name="ColorInput" value="Color" oninput="calculatePrice()">
         <label for="ColorInput">Color night vision</label>
+        <br>
+        <input type="checkbox" id="isLocalInput" name="isLocalInput" value="isLocalInput" oninput="calculatePrice()">
+        <label for="isLocalInput">Ar esate is Klaipedos</label>
     </form>
     <h2 id="result">0</h2>
     <script src="calculator.js"></script>
