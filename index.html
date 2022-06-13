@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+</head>
+
+<body>
+    <h1 id="heading">Kameru kainos kalkuliatorius</h1>
+    <form id="cameraForm">
+        <label for="cameraCountInput">Kameru kiekis</label>
+        <br>
+        <input type="number" name="cameraCountInput" id="cameraCountInput" value="1" oninput="calculatePrice()" />
+        <br>
+        <label for="cableLenghtInput">atsumas tarp interneto routerio ir kameros</label>
+        <br>
+        <input type="number" name="cableLenghtInput" id="cableLenghtInput" value="10" oninput="calculatePrice()" />
+        <br>
+        <select name="Mpx amount" id="mpxInput" oninput="calculatePrice()">
+            <option value="2">2Mpx</option>
+            <option value="4">4Mpx</option>
+            <option value="5">5Mpx</option>
+            <option value="8">8Mpx</option>
+        </select>
+        <br>
+        <input type="checkbox" id="AIinput" name="AIinput" value="AI" oninput="calculatePrice()">
+        <label for="AIinput">AI</label>
+        <br>
+        <input type="checkbox" id="ColorInput" name="ColorInput" value="Color" oninput="calculatePrice()">
+        <label for="ColorInput">Color night vision</label>
+    </form>
+    <h2 id="result">0</h2>
+    <script src="calculator.js"></script>
+</body>
+
+</html>
