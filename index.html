@@ -13,13 +13,16 @@
         <br>
         <label for="cableLenghtInput">atsumas tarp interneto routerio ir kameros</label>
         <br>
+        <!-- Add an option to use default values if a client doesnt know meters -->
         <input type="number" name="cableLenghtInput" id="cableLenghtInput" value="50" oninput="calculatePrice()" />
         <br>
         <select name="Mpx amount" id="mpxInput" oninput="calculatePrice()">
-            <option value="2">2Mpx</option>
-            <option value="4">4Mpx</option>
-            <option value="8">8Mpx</option>
+            <option value="2">1080p HD </option>
+            <option value="4">2k</option>
+            <option value="8">Ultra HD 4k</option>
+            <!-- Add description and image example -->
         </select>
+        <!-- generate a select element with amount of cameras selection -->
         <br>
         <!-- Change to days selection -->
         <select name="TbAmount" id="TbAmount" oninput="calculatePrice()">
@@ -29,6 +32,12 @@
             <option value="8">8Tb</option>
             <option value="16">16Tb</option>
             <option value="32">32Tb</option>
+        </select>
+        <br>
+        <select name="GbAmount" id="GbAmount" oninput="calculatePrice()">
+            <option value="32">32Gb</option>
+            <option value="64">64GBb</option>
+            <option value="128">128GBb</option>
         </select>
         <br>
         <input type="checkbox" id="AIinput" name="AIinput" value="AI" oninput="calculatePrice()">
