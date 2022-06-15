@@ -236,15 +236,31 @@ function calculatePrice() {
     TbAmount.hidden = false;
   }
 
-  //TODO add serverine spinta islaidos if 2 or more cameras.
+  //serverine spinta islaidos if 2 or more cameras.
   let spintaPrice = 0;
   if (cameraCount > 1) {
     spintaPrice = serverineSpintaPrice;
   }
   console.log("Serverine metaline spinta:", spintaPrice);
   finalPrice += spintaPrice;
-  //TODO add option to select stulpiniai kronsteinai
 
+  //TODO add option to select stulpiniai kronsteinai
+  const stulpaiElement = document.getElementById("stulpaiInput");
+  stulpaiElement.innerHTML = "";
+  for (i = 0; i < cameraCount; i++) {
+    const stulpaiOption = document.createElement("option");
+    const stulpaiNode = document.createTextNode(i + 1);
+    stulpaiOption.appendChild(stulpaiNode);
+    stulpaiOption.value = i + 1;
+    // console.log(stulpaiOption.value);
+    stulpaiElement.appendChild(stulpaiOption);
+  }
+
+  //calculate stulpai price
+  //TODO STOP REGENERATION OF STULPAI SELECTOR WHEN CLICKING ON IT
+console.log(stulpaiInput.value)
+
+  //final price results
   console.log(finalPrice);
   console.log("-----------------------------------------------------");
   if (cameraCount <= 32) {
