@@ -19,8 +19,16 @@ const NVR16ChannelPrice = 500;
 const NVR32ChannelPrice = 700;
 
 const hardTbPrice = 40;
-const sdCardGBPrice = 20/32;
+const sdCardGBPrice = 20 / 32;
 const serverineSpintaPrice = 70;
+
+const days2MpxCamera1Tb = 60;
+const days4MpxCamera1Tb = 30;
+const days8MpxCamera1Tb = 8;
+
+const days2MpxCamera32Gb = 2;
+const days4MpxCamera32Gb = 1;
+const days8MpxCamera32Gb = 0.25;
 
 function NVR(channels, hard) {
   this.channels = channels;
@@ -77,45 +85,44 @@ function calculatePrice() {
   //count camera price
   for (i = 0; i < cameraCount; i++) {
     //base price
-    let singleCameraPrice = 0
+    let singleCameraPrice = 0;
     singleCameraPrice += camera[i].basePrice;
     //AI price
     singleCameraPrice += camera[i].isAI == true ? AIprice : 0;
     //Color price
     singleCameraPrice += camera[i].isColor == true ? colorPrice : 0;
     switch (camera[i].mpx) {
-        case "2":
-          console.log(2);
-          singleCameraPrice += price2Mpx;
-          break;
-        case "4":
-          console.log(4);
-          singleCameraPrice += price4Mpx;
-          break;
-        case "8":
-          console.log(8);
-          singleCameraPrice += price8Mpx;
-          break;
-        default:
-          break;
-      }
-      console.log("Camera",i+1,"price",singleCameraPrice)
-      finalPrice += singleCameraPrice
+      case "2":
+        console.log(2);
+        singleCameraPrice += price2Mpx;
+        break;
+      case "4":
+        console.log(4);
+        singleCameraPrice += price4Mpx;
+        break;
+      case "8":
+        console.log(8);
+        singleCameraPrice += price8Mpx;
+        break;
+      default:
+        break;
+    }
+    console.log("Camera", i + 1, "price", singleCameraPrice);
+    finalPrice += singleCameraPrice;
 
     //Cable lenght price calculation
-    let singleCameraCablePrice = 0
+    let singleCameraCablePrice = 0;
     singleCameraCablePrice += camera[i].cableLenght * cablePrice;
-    console.log("camera",i+1,"cable price", singleCameraCablePrice)
-    finalPrice += singleCameraCablePrice
+    console.log("camera", i + 1, "cable price", singleCameraCablePrice);
+    finalPrice += singleCameraCablePrice;
     //TOUSE total cable used in m.
     //totalCableUsed += camera[i].cableLenght
 
     //mounting base price
-    let singleCameraMountPrice = 0
+    let singleCameraMountPrice = 0;
     singleCameraMountPrice += camera[i].hasMounting == true ? mountPrice : 0;
-    console.log("Camera",i+1,"mount price",singleCameraMountPrice)
-    finalPrice+=singleCameraMountPrice
-   
+    console.log("Camera", i + 1, "mount price", singleCameraMountPrice);
+    finalPrice += singleCameraMountPrice;
   }
   //work price minimum 120eur check
   let finalWorkPrice = cameraCount * minWorkPrice;
@@ -125,84 +132,124 @@ function calculatePrice() {
   }
   finalPrice += finalWorkPrice;
   console.log("Work price", finalWorkPrice);
-  
 
-    //calculate NVR Price
-    let NVRPrice = 0;
-    if (cameraCount > 1 && cameraCount <= 4) {
-      NVRPrice = NVR4ChannelPrice;
-    } else if (cameraCount > 4 && cameraCount <= 8) {
-      NVRPrice = NVR8ChannelPrice;
-    } else if (cameraCount > 8 && cameraCount <= 16) {
-      NVRPrice = NVR16ChannelPrice;
-    } else if (cameraCount > 16 && cameraCount <= 32) {
-      NVRPrice = NVR32ChannelPrice;
-    } else {
-      console.log("Too many cameras, please call for individual price");
-    }
-    console.log("Nvr price", NVRPrice);
-    finalPrice += NVRPrice;
+  //calculate NVR Price
+  let NVRPrice = 0;
+  if (cameraCount > 1 && cameraCount <= 4) {
+    NVRPrice = NVR4ChannelPrice;
+  } else if (cameraCount > 4 && cameraCount <= 8) {
+    NVRPrice = NVR8ChannelPrice;
+  } else if (cameraCount > 8 && cameraCount <= 16) {
+    NVRPrice = NVR16ChannelPrice;
+  } else if (cameraCount > 16 && cameraCount <= 32) {
+    NVRPrice = NVR32ChannelPrice;
+  } else {
+    console.log("Too many cameras, please call for individual price");
+  }
+  console.log("Nvr price", NVRPrice);
+  finalPrice += NVRPrice;
 
-    //calculate TB Price if more than 1 camera
-    if (cameraCount > 1) {
-      let TbPrice = hardTbPrice * TbAmount.value;
-      console.log("Terabaitu kaina", TbPrice);
-      finalPrice += TbPrice;
-    }
-
-    //tvirtinimas price 10% nuo laidu
-    let tvirtinimas = cableLenght * cameraCount * cablePrice * 0.1;
-    console.log("Tvirtinimo medziagos", tvirtinimas);
-    finalPrice += tvirtinimas;
-
-    //laidu klojimo darbai
-    let laiduDarbai = cableLenght * cameraCount;
-    console.log("laidu klojimo darbai", laiduDarbai);
-    finalPrice += laiduDarbai;
-
-    //Transporto islaidos, Klaipeda ar ne
-    isLocal = isLocalInput.checked;
-    let transportCost = isLocal == true ? 20 : 50;
-    console.log("Transporto islaidos", transportCost);
-    finalPrice += transportCost;
-
-    //If 1 camera let select sd card, also hide Tb option and show Gb selector. And vice versa
-    let sdCardCost = 0;
-    if (cameraCount == 1) {
-      console.log("SD card size", GbAmount.value);
-      GbAmount.hidden = false;
-      TbAmount.hidden = true;
-      sdCardCost = sdCardGBPrice * GbAmount.value;
-      console.log("SD card price", sdCardCost);
-      finalPrice += sdCardCost;
-    } else {
-      //   hide sd card sselector
-      GbAmount.hidden = true;
-      //show tb selector
-      TbAmount.hidden = false;
-    }
-
-   
-
-  
-
-   
-
-    //TODO add serverine spinta islaidos if 2 or more cameras.
-    let spintaPrice = 0;
-    if (cameraCount > 1) {
-      spintaPrice = serverineSpintaPrice;
-    }
-    console.log("Serverine metaline spinta:", spintaPrice);
-    finalPrice += spintaPrice;
-    //TODO add option to select stulpiniai kronsteinai
-
-    console.log(finalPrice);
-    console.log("-----------------------------------------------------")
-    if (cameraCount <= 32) {
-      result.innerText = finalPrice;
-    } else {
-      result.innerText = `Too many cameras, please call for individual price`;
-    }
+  //calculate TB Price if more than 1 camera
+  if (cameraCount > 1) {
+    let TbPrice = hardTbPrice * TbAmount.value;
+    console.log("Terabaitu kaina", TbPrice);
+    finalPrice += TbPrice;
   }
 
+  //storage days calculation Tb
+  function calculateDaysTb() {
+    let storageDays = 0;
+    function storageDayCalculation(daysConst) {
+      return (TbAmount.value * daysConst) / cameraCount;
+    }
+    switch (mpxInput.value) {
+      case "2":
+        storageDays = storageDayCalculation(days2MpxCamera1Tb);
+        break;
+      case "4":
+        storageDays = storageDayCalculation(days4MpxCamera1Tb);
+        break;
+      case "8":
+        storageDays = storageDayCalculation(days8MpxCamera1Tb);
+        break;
+      default:
+        storageDays = NaN;
+        break;
+    }
+    storageLabel.innerText = storageDays + " dienu irasas";
+  }
+
+  //storage days calculation Gb
+  function calculateDaysGb() {
+    let storageDays = 0;
+    function storageDayCalculationGb(daysConst) {
+      return ((GbAmount.value / 32) * daysConst) / cameraCount;
+    }
+    switch (mpxInput.value) {
+      case "2":
+        storageDays = storageDayCalculationGb(days2MpxCamera32Gb);
+        break;
+      case "4":
+        storageDays = storageDayCalculationGb(days4MpxCamera32Gb);
+        break;
+      case "8":
+        storageDays = storageDayCalculationGb(days8MpxCamera32Gb);
+        break;
+      default:
+        storageDays = NaN;
+        break;
+    }
+    storageLabel.innerText = storageDays + " dienu irasas";
+  }
+  //choose calculation Tb or Gb
+  cameraCount == 1 ? calculateDaysGb() : calculateDaysTb();
+
+  //tvirtinimas price 10% nuo laidu
+  let tvirtinimas = cableLenght * cameraCount * cablePrice * 0.1;
+  console.log("Tvirtinimo medziagos", tvirtinimas);
+  finalPrice += tvirtinimas;
+
+  //laidu klojimo darbai
+  let laiduDarbai = cableLenght * cameraCount;
+  console.log("laidu klojimo darbai", laiduDarbai);
+  finalPrice += laiduDarbai;
+
+  //Transporto islaidos, Klaipeda ar ne
+  isLocal = isLocalInput.checked;
+  let transportCost = isLocal == true ? 20 : 50;
+  console.log("Transporto islaidos", transportCost);
+  finalPrice += transportCost;
+
+  //If 1 camera let select sd card, also hide Tb option and show Gb selector. And vice versa
+  let sdCardCost = 0;
+  if (cameraCount == 1) {
+    console.log("SD card size", GbAmount.value);
+    GbAmount.hidden = false;
+    TbAmount.hidden = true;
+    sdCardCost = sdCardGBPrice * GbAmount.value;
+    console.log("SD card price", sdCardCost);
+    finalPrice += sdCardCost;
+  } else {
+    //   hide sd card sselector
+    GbAmount.hidden = true;
+    //show tb selector
+    TbAmount.hidden = false;
+  }
+
+  //TODO add serverine spinta islaidos if 2 or more cameras.
+  let spintaPrice = 0;
+  if (cameraCount > 1) {
+    spintaPrice = serverineSpintaPrice;
+  }
+  console.log("Serverine metaline spinta:", spintaPrice);
+  finalPrice += spintaPrice;
+  //TODO add option to select stulpiniai kronsteinai
+
+  console.log(finalPrice);
+  console.log("-----------------------------------------------------");
+  if (cameraCount <= 32) {
+    result.innerText = finalPrice;
+  } else {
+    result.innerText = `Too many cameras, please call for individual price`;
+  }
+}
