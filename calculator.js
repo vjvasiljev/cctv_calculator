@@ -19,6 +19,7 @@ const NVR16ChannelPrice = 500
 const NVR32ChannelPrice = 700
 
 const hardTbPrice = 40
+const serverineSpintaPrice = 70
 
 function NVR(channels, hard) {
     this.channels = channels
@@ -54,43 +55,45 @@ function calculatePrice() {
     }
     let = totalCableUsed = 0
     //count camera price
+    let cameraPrice = 0
     for (i = 0; i < cameraCount; i++) {
         //base price
-        finalPrice += camera[i].basePrice
+        cameraPrice += camera[i].basePrice
         //AI price
-        finalPrice += (camera[i].isAI == true) ? AIprice : 0
+        cameraPrice += (camera[i].isAI == true) ? AIprice : 0
         //Color price
-        finalPrice += (camera[i].isColor == true) ? colorPrice : 0
+        cameraPrice += (camera[i].isColor == true) ? colorPrice : 0
         //Cable lenght price calculation
-        finalPrice += camera[i].cableLenght * cablePrice
+        cameraPrice += camera[i].cableLenght * cablePrice
         //TOUSE total cable used in m.
         //totalCableUsed += camera[i].cableLenght
         //mounting base price
-        finalPrice += (camera[i].hasMounting == true) ? mountPrice : 0;
+        cameraPrice += (camera[i].hasMounting == true) ? mountPrice : 0;
         switch (camera[i].mpx) {
             case "2":
-                console.log(2)
-                finalPrice += price2Mpx;
+                cameraPrice += price2Mpx;
                 break;
             case "4":
-                console.log(4)
-                finalPrice += price4Mpx;
+                cameraPrice += price4Mpx;
                 break;
             case "8":
-                console.log(8)
-                finalPrice += price8Mpx;
+                cameraPrice += price8Mpx;
                 break;
             default:
                 break;
 
         }
 
-
+        console.log("camera ", i+1, "kaina", cameraPrice)
+        finalPrice += cameraPrice
+        cameraPrice = 0
     }
     //work price minimum 120eur check
     let finalWorkPrice = cameraCount * minWorkPrice
-    //add price for installing NVR if 2 or more cameras
-    if (cameraCount > 2) {
+    //TODO add price for installing NVR if 2 or more cameras
+
+    //TODO add option for 1 camera with SD card
+    if (cameraCount >= 2) {
         finalWorkPrice += minWorkPrice
     }
     finalPrice += finalWorkPrice
@@ -133,6 +136,15 @@ function calculatePrice() {
     let transportCost = (isLocal == true) ? 20 : 50
     console.log("Transporto islaidos", transportCost)
     finalPrice += transportCost
+
+    //TODO add serverine spinta islaidos if 2 or more cameras.
+    let spintaPrice = 0
+    if (cameraCount > 1) {
+        spintaPrice = serverineSpintaPrice
+    }
+    console.log("Serverine metaline spinta:", spintaPrice)
+    finalPrice += spintaPrice
+    //TODO add option to select stulpiniai kronsteinai
 
 
     console.log(finalPrice)
