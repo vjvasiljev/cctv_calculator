@@ -19,7 +19,7 @@ const NVR16ChannelPrice = 500;
 const NVR32ChannelPrice = 700;
 
 const hardTbPrice = 40;
-const sdCardGBPrice = 1;
+const sdCardGBPrice = 20/32;
 const serverineSpintaPrice = 70;
 
 function NVR(channels, hard) {
