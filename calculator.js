@@ -18,13 +18,9 @@ const NVR8ChannelPrice = 260;
 const NVR16ChannelPrice = 500;
 const NVR32ChannelPrice = 700;
 
-<<<<<<< HEAD
-const hardTbPrice = 40
-const serverineSpintaPrice = 70
-=======
 const hardTbPrice = 40;
 const sdCardGBPrice = 1;
->>>>>>> refs/remotes/origin/main
+const serverineSpintaPrice = 70;
 
 function NVR(channels, hard) {
   this.channels = channels;
@@ -81,63 +77,45 @@ function calculatePrice() {
   //count camera price
   for (i = 0; i < cameraCount; i++) {
     //base price
-    finalPrice += camera[i].basePrice;
+    let singleCameraPrice = 0
+    singleCameraPrice += camera[i].basePrice;
     //AI price
-    finalPrice += camera[i].isAI == true ? AIprice : 0;
+    singleCameraPrice += camera[i].isAI == true ? AIprice : 0;
     //Color price
-    finalPrice += camera[i].isColor == true ? colorPrice : 0;
+    singleCameraPrice += camera[i].isColor == true ? colorPrice : 0;
+    switch (camera[i].mpx) {
+        case "2":
+          console.log(2);
+          singleCameraPrice += price2Mpx;
+          break;
+        case "4":
+          console.log(4);
+          singleCameraPrice += price4Mpx;
+          break;
+        case "8":
+          console.log(8);
+          singleCameraPrice += price8Mpx;
+          break;
+        default:
+          break;
+      }
+      console.log("Camera",i+1,"price",singleCameraPrice)
+      finalPrice += singleCameraPrice
+
     //Cable lenght price calculation
-    finalPrice += camera[i].cableLenght * cablePrice;
+    let singleCameraCablePrice = 0
+    singleCameraCablePrice += camera[i].cableLenght * cablePrice;
+    console.log("camera",i+1,"cable price", singleCameraCablePrice)
+    finalPrice += singleCameraCablePrice
     //TOUSE total cable used in m.
     //totalCableUsed += camera[i].cableLenght
+
     //mounting base price
-    finalPrice += camera[i].hasMounting == true ? mountPrice : 0;
-    switch (camera[i].mpx) {
-      case "2":
-        console.log(2);
-        finalPrice += price2Mpx;
-        break;
-      case "4":
-        console.log(4);
-        finalPrice += price4Mpx;
-        break;
-      case "8":
-        console.log(8);
-        finalPrice += price8Mpx;
-        break;
-      default:
-        break;
-    }
-<<<<<<< HEAD
-    let = totalCableUsed = 0
-    //count camera price
-    let cameraPrice = 0
-    for (i = 0; i < cameraCount; i++) {
-        //base price
-        cameraPrice += camera[i].basePrice
-        //AI price
-        cameraPrice += (camera[i].isAI == true) ? AIprice : 0
-        //Color price
-        cameraPrice += (camera[i].isColor == true) ? colorPrice : 0
-        //Cable lenght price calculation
-        cameraPrice += camera[i].cableLenght * cablePrice
-        //TOUSE total cable used in m.
-        //totalCableUsed += camera[i].cableLenght
-        //mounting base price
-        cameraPrice += (camera[i].hasMounting == true) ? mountPrice : 0;
-        switch (camera[i].mpx) {
-            case "2":
-                cameraPrice += price2Mpx;
-                break;
-            case "4":
-                cameraPrice += price4Mpx;
-                break;
-            case "8":
-                cameraPrice += price8Mpx;
-                break;
-            default:
-                break;
-=======
+    let singleCameraMountPrice = 0
+    singleCameraMountPrice += camera[i].hasMounting == true ? mountPrice : 0;
+    console.log("Camera",i+1,"mount price",singleCameraMountPrice)
+    finalPrice+=singleCameraMountPrice
+   
   }
   //work price minimum 120eur check
   let finalWorkPrice = cameraCount * minWorkPrice;
@@ -147,121 +125,84 @@ function calculatePrice() {
   }
   finalPrice += finalWorkPrice;
   console.log("Work price", finalWorkPrice);
->>>>>>> refs/remotes/origin/main
+  
 
-  //calculate NVR Price
-  let NVRPrice = 0;
-  if (cameraCount > 1 && cameraCount <= 4) {
-    NVRPrice = NVR4ChannelPrice;
-  } else if (cameraCount > 4 && cameraCount <= 8) {
-    NVRPrice = NVR8ChannelPrice;
-  } else if (cameraCount > 8 && cameraCount <= 16) {
-    NVRPrice = NVR16ChannelPrice;
-  } else if (cameraCount > 16 && cameraCount <= 32) {
-    NVRPrice = NVR32ChannelPrice;
-  } else {
-    console.log("Too many cameras, please call for individual price");
-  }
-  console.log("Nvr price", NVRPrice);
-  finalPrice += NVRPrice;
-
-<<<<<<< HEAD
-        console.log("camera ", i+1, "kaina", cameraPrice)
-        finalPrice += cameraPrice
-        cameraPrice = 0
+    //calculate NVR Price
+    let NVRPrice = 0;
+    if (cameraCount > 1 && cameraCount <= 4) {
+      NVRPrice = NVR4ChannelPrice;
+    } else if (cameraCount > 4 && cameraCount <= 8) {
+      NVRPrice = NVR8ChannelPrice;
+    } else if (cameraCount > 8 && cameraCount <= 16) {
+      NVRPrice = NVR16ChannelPrice;
+    } else if (cameraCount > 16 && cameraCount <= 32) {
+      NVRPrice = NVR32ChannelPrice;
+    } else {
+      console.log("Too many cameras, please call for individual price");
     }
-    //work price minimum 120eur check
-    let finalWorkPrice = cameraCount * minWorkPrice
-    //TODO add price for installing NVR if 2 or more cameras
+    console.log("Nvr price", NVRPrice);
+    finalPrice += NVRPrice;
 
-    //TODO add option for 1 camera with SD card
-    if (cameraCount >= 2) {
-        finalWorkPrice += minWorkPrice
+    //calculate TB Price if more than 1 camera
+    if (cameraCount > 1) {
+      let TbPrice = hardTbPrice * TbAmount.value;
+      console.log("Terabaitu kaina", TbPrice);
+      finalPrice += TbPrice;
     }
-    finalPrice += finalWorkPrice
-    console.log("Work price", finalWorkPrice)
-=======
-  //calculate TB Price if more than 1 camera
-  if (cameraCount > 1) {
-    let TbPrice = hardTbPrice * TbAmount.value;
-    console.log("Terabaitu kaina", TbPrice);
-    finalPrice += TbPrice;
-  }
 
-  //tvirtinimas price 10% nuo laidu
-  let tvirtinimas = cableLenght * cameraCount * cablePrice * 0.1;
-  console.log("Tvirtinimo medziagos", tvirtinimas);
-  finalPrice += tvirtinimas;
->>>>>>> refs/remotes/origin/main
-
-  //laidu klojimo darbai
-  let laiduDarbai = cableLenght * cameraCount;
-  console.log("laidu klojimo darbai", laiduDarbai);
-  finalPrice += laiduDarbai;
-
-  //Transporto islaidos, Klaipeda ar ne
-  isLocal = isLocalInput.checked;
-  let transportCost = isLocal == true ? 20 : 50;
-  console.log("Transporto islaidos", transportCost);
-  finalPrice += transportCost;
-
-  //If 1 camera let select sd card, also hide Tb option and show Gb selector. And vice versa
-  let sdCardCost = 0;
-  if (cameraCount == 1) {
-    console.log("SD card size", GbAmount.value);
-    GbAmount.hidden = false;
-    TbAmount.hidden = true;
-    sdCardCost = sdCardGBPrice * GbAmount.value;
-    console.log("SD card price", sdCardCost);
-    finalPrice += sdCardCost;
-  } else {
-    //   hide sd card sselector
-    GbAmount.hidden = true;
-    //show tb selector
-    TbAmount.hidden = false;
-  }
-
-<<<<<<< HEAD
     //tvirtinimas price 10% nuo laidu
-    let tvirtinimas = cableLenght * cameraCount * cablePrice * 0.1
-    console.log("Tvirtinimo medziagos", tvirtinimas)
-    finalPrice += tvirtinimas
+    let tvirtinimas = cableLenght * cameraCount * cablePrice * 0.1;
+    console.log("Tvirtinimo medziagos", tvirtinimas);
+    finalPrice += tvirtinimas;
 
-    //laidu klojimo darbai 
-    let laiduDarbai = cableLenght * cameraCount
-    console.log("laidu klojimo darbai", laiduDarbai)
-    finalPrice += laiduDarbai
+    //laidu klojimo darbai
+    let laiduDarbai = cableLenght * cameraCount;
+    console.log("laidu klojimo darbai", laiduDarbai);
+    finalPrice += laiduDarbai;
 
     //Transporto islaidos, Klaipeda ar ne
-    isLocal = isLocalInput.checked
-    let transportCost = (isLocal == true) ? 20 : 50
-    console.log("Transporto islaidos", transportCost)
-    finalPrice += transportCost
+    isLocal = isLocalInput.checked;
+    let transportCost = isLocal == true ? 20 : 50;
+    console.log("Transporto islaidos", transportCost);
+    finalPrice += transportCost;
+
+    //If 1 camera let select sd card, also hide Tb option and show Gb selector. And vice versa
+    let sdCardCost = 0;
+    if (cameraCount == 1) {
+      console.log("SD card size", GbAmount.value);
+      GbAmount.hidden = false;
+      TbAmount.hidden = true;
+      sdCardCost = sdCardGBPrice * GbAmount.value;
+      console.log("SD card price", sdCardCost);
+      finalPrice += sdCardCost;
+    } else {
+      //   hide sd card sselector
+      GbAmount.hidden = true;
+      //show tb selector
+      TbAmount.hidden = false;
+    }
+
+   
+
+  
+
+   
 
     //TODO add serverine spinta islaidos if 2 or more cameras.
-    let spintaPrice = 0
+    let spintaPrice = 0;
     if (cameraCount > 1) {
-        spintaPrice = serverineSpintaPrice
+      spintaPrice = serverineSpintaPrice;
     }
-    console.log("Serverine metaline spinta:", spintaPrice)
-    finalPrice += spintaPrice
+    console.log("Serverine metaline spinta:", spintaPrice);
+    finalPrice += spintaPrice;
     //TODO add option to select stulpiniai kronsteinai
 
-
-    console.log(finalPrice)
+    console.log(finalPrice);
+    console.log("-----------------------------------------------------")
     if (cameraCount <= 32) {
-        result.innerText = finalPrice
+      result.innerText = finalPrice;
     } else {
-        result.innerText = `Too many cameras, please call for individual price`
+      result.innerText = `Too many cameras, please call for individual price`;
     }
-
-}
-=======
-  console.log(finalPrice);
-  if (cameraCount <= 32) {
-    result.innerText = finalPrice;
-  } else {
-    result.innerText = `Too many cameras, please call for individual price`;
   }
-}
->>>>>>> refs/remotes/origin/main
+
