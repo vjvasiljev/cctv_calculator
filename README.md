@@ -1,4 +1,6 @@
 # cctv_calculator
+
 TODO:
 CSS
 STOP REGENERATION OF STULPAI SELECTOR WHEN CLICKING ON IT
+Imnplement react
