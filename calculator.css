@@ -1,0 +1,34 @@
+/* prepare wrapper element */
+div {
+  display: inline-block;
+  position: relative;
+}
+/* position the unit to the right of the wrapper */
+div::after {
+  position: absolute;
+  top: 2px;
+  right: 0.5em;
+  transition: all 0.05s ease-in-out;
+}
+/* move unit more to the left on hover or focus within
+     for arrow buttons will appear to the right of number inputs */
+div:hover::after,
+div:focus-within::after {
+  right: 1.5em;
+}
+/* handle Firefox (arrows always shown) */
+@supports (-moz-appearance: none) {
+  div::after {
+    right: 1.5em;
+  }
+}
+/* set the unit abbreviation for each unit class */
+.met::after {
+  content: "m";
+}
+.db::after {
+  content: "db";
+}
+.percent::after {
+  content: "%";
+}

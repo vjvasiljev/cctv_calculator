@@ -30,6 +30,15 @@ const days2MpxCamera32Gb = 2;
 const days4MpxCamera32Gb = 1;
 const days8MpxCamera32Gb = 0.25;
 
+var formatter = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'EUR',
+
+  // These options are needed to round to whole numbers if that's what you want.
+  //minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
+  //maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
+});
+
 function NVR(channels, hard) {
   this.channels = channels;
   this.hard = hard;
@@ -157,6 +166,9 @@ function calculatePrice() {
   }
 
   //storage days calculation Tb
+  function changeStorageLabel (storageDays) {
+    storageLabel.innerText = "Įrašo saugojimo dienų kiekis: " + Math. floor(storageDays);
+  }
   function calculateDaysTb() {
     let storageDays = 0;
     function storageDayCalculation(daysConst) {
@@ -176,7 +188,7 @@ function calculatePrice() {
         storageDays = NaN;
         break;
     }
-    storageLabel.innerText = storageDays + " dienu irasas";
+    changeStorageLabel(storageDays);
   }
 
   //storage days calculation Gb
@@ -199,7 +211,7 @@ function calculatePrice() {
         storageDays = NaN;
         break;
     }
-    storageLabel.innerText = storageDays + " dienu irasas";
+    changeStorageLabel(storageDays);
   }
   //choose calculation Tb or Gb
   cameraCount == 1 ? calculateDaysGb() : calculateDaysTb();
@@ -214,11 +226,11 @@ function calculatePrice() {
   console.log("laidu klojimo darbai", laiduDarbai);
   finalPrice += laiduDarbai;
 
-  //Transporto islaidos, Klaipeda ar ne
-  isLocal = isLocalInput.checked;
-  let transportCost = isLocal == true ? 20 : 50;
-  console.log("Transporto islaidos", transportCost);
-  finalPrice += transportCost;
+  // //Transporto islaidos, Klaipeda ar ne
+  // isLocal = isLocalInput.checked;
+  // let transportCost = isLocal == true ? 20 : 50;
+  // console.log("Transporto islaidos", transportCost);
+  // finalPrice += transportCost;
 
   //If 1 camera let select sd card, also hide Tb option and show Gb selector. And vice versa
   let sdCardCost = 0;
@@ -244,27 +256,27 @@ function calculatePrice() {
   console.log("Serverine metaline spinta:", spintaPrice);
   finalPrice += spintaPrice;
 
-  //TODO add option to select stulpiniai kronsteinai
-  const stulpaiElement = document.getElementById("stulpaiInput");
-  stulpaiElement.innerHTML = "";
-  for (i = 0; i < cameraCount; i++) {
-    const stulpaiOption = document.createElement("option");
-    const stulpaiNode = document.createTextNode(i + 1);
-    stulpaiOption.appendChild(stulpaiNode);
-    stulpaiOption.value = i + 1;
-    // console.log(stulpaiOption.value);
-    stulpaiElement.appendChild(stulpaiOption);
-  }
+  // //TODO add option to select stulpiniai kronsteinai
+  // const stulpaiElement = document.getElementById("stulpaiInput");
+  // stulpaiElement.innerHTML = "";
+  // for (i = 0; i < cameraCount; i++) {
+  //   const stulpaiOption = document.createElement("option");
+  //   const stulpaiNode = document.createTextNode(i + 1);
+  //   stulpaiOption.appendChild(stulpaiNode);
+  //   stulpaiOption.value = i + 1;
+  //   // console.log(stulpaiOption.value);
+  //   stulpaiElement.appendChild(stulpaiOption);
+  // }
 
-  //calculate stulpai price
-  //TODO STOP REGENERATION OF STULPAI SELECTOR WHEN CLICKING ON IT
-console.log(stulpaiInput.value)
+  // //calculate stulpai price
+  // //TODO STOP REGENERATION OF STULPAI SELECTOR WHEN CLICKING ON IT
+  // console.log(stulpaiInput.value);
 
   //final price results
   console.log(finalPrice);
   console.log("-----------------------------------------------------");
   if (cameraCount <= 32) {
-    result.innerText = finalPrice;
+    result.innerText = formatter.format(finalPrice);
   } else {
     result.innerText = `Too many cameras, please call for individual price`;
   }

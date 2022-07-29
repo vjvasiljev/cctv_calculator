@@ -1,91 +1,106 @@
 <!DOCTYPE html>
 <html>
-  <head> </head>
+  <head>
+    <link rel="stylesheet" href="calculator.css" />
+  </head>
+  <body>
+    <div onload="calculatePrice()">
+      <h1 id="headingCCTVCalculator">
+        Vaizdo stebėjimo kamerų kainos skaičiuoklė
+      </h1>
+      <form id="cameraForm">
+        <label for="cameraCountInput">Pasirinkite kamerų kiekį</label>
+        <br />
 
-  <body onload="calculatePrice()">
-    <h1 id="heading">Kameru kainos kalkuliatorius</h1>
-    <form id="cameraForm">
-      <label for="cameraCountInput">Kameru kiekis</label>
-      <br />
-      <input
-        type="number"
-        name="cameraCountInput"
-        id="cameraCountInput"
-        value="1"
-        oninput="calculatePrice()"
-      />
-      <br />
-      <label for="cableLenghtInput"
-        >atsumas tarp interneto routerio ir kameros</label
-      >
-      <br />
-      <!-- Add an option to use default values if a client doesnt know meters -->
-      <input
-        type="number"
-        name="cableLenghtInput"
-        id="cableLenghtInput"
-        value="50"
-        oninput="calculatePrice()"
-      />
-      <br />
-      <select name="Mpx amount" id="mpxInput" oninput="calculatePrice()">
-        <option value="2">1080p HD</option>
-        <option value="4" selected="selected">2k</option>
-        <option value="8">Ultra HD 4k</option>
-        <!-- Add description and image example -->
-      </select>
-      <!-- generate a select element with amount of cameras selection -->
-      <br />
-      <!-- Change to days selection -->
-      <select name="TbAmount" id="TbAmount" oninput="calculatePrice()">
-        <option value="1">1Tb</option>
-        <option value="2">2Tb</option>
-        <option value="4">4Tb</option>
-        <option value="8">8Tb</option>
-        <option value="16">16Tb</option>
-        <option value="32">32Tb</option>
-      </select>
-      <select name="GbAmount" id="GbAmount" oninput="calculatePrice()">
-        <option value="32">32Gb</option>
-        <option value="64">64GBb</option>
-        <option value="128" selected="selected">128GBb</option>
-      </select>
-      <label for="TbAmount" id="storageLabel">placeholder</label>
-      <br />
-      <input
-        type="checkbox"
-        id="AIinput"
-        name="AIinput"
-        value="AI"
-        oninput="calculatePrice()"
-      />
-      <label for="AIinput">AI</label>
-      <br />
-      <input
-        type="checkbox"
-        id="ColorInput"
-        name="ColorInput"
-        value="Color"
-        oninput="calculatePrice()"
-      />
-      <label for="ColorInput">Color night vision</label>
-      <br />
-      <input
-        type="checkbox"
-        id="isLocalInput"
-        name="isLocalInput"
-        value="isLocalInput"
-        oninput="calculatePrice()"
-        checked
-      />
-      <label for="isLocalInput">Ar esate is Klaipedos</label>
+        <input
+          type="number"
+          min="1"
+          name="cameraCountInput"
+          id="cameraCountInput"
+          value="1"
+          oninput="calculatePrice()"
+        />
 
-      <div id="stulpaiInputDiv">
-        <select id="stulpaiInput"></select>
-        <label for="stulpaiInput">Kiek kameru bus ant stulpu</label>
-      </div>
-    </form>
-    <h2 id="result">0</h2>
-    <script src="calculator.js"></script>
+        <br />
+        <label for="cableLenghtInput">Bendras laidų kiekis metrais</label>
+        <br />
+        <!-- Add an option to use default values if a client doesnt know meters -->
+        <div class="met">
+          <input
+            type="number"
+            min="0"
+            name="cableLenghtInput"
+            id="cableLenghtInput"
+            value="50"
+            oninput="calculatePrice()"
+          />
+        </div>
+        <br />
+        <label for="mpxInput">Pasirinkite vaizdo kokybė</label>
+        <br />
+        <select name="mpxInput" id="mpxInput" oninput="calculatePrice()">
+          <option value="2">Gera kokybė 1080p Full HD</option>
+          <option value="4" selected="selected">
+            Geresnė kokybė 1440p 2k QHD
+          </option>
+          <option value="8">Super kokybė Ultra HD 4k</option>
+          <!-- Add description and image example -->
+        </select>
+        <!-- generate a select element with amount of cameras selection -->
+        <br />
+        <!-- Change to days selection -->
+        <label for="TbAmount">Pasirinkite įrašo saugojimo laikotarpį</label>
+        <br />
+        <select name="TbAmount" id="TbAmount" oninput="calculatePrice()">
+          <option value="1">Kietojo disko talpa 1Tb</option>
+          <option value="2">Kietojo disko talpa 2Tb</option>
+          <option value="4">Kietojo disko talpa 4Tb</option>
+          <option value="8">Kietojo disko talpa 8Tb</option>
+          <option value="16">Kietojo disko talpa 16Tb</option>
+          <option value="32">Kietojo disko talpa 32Tb</option>
+        </select>
+        <select name="GbAmount" id="GbAmount" oninput="calculatePrice()">
+          <option value="32">Atminties kortelės talpa 32Gb</option>
+          <option value="64">Atminties kortelės talpa 64GBb</option>
+          <option value="128" selected="selected">Atminties kortelės talpa 128GBb</option>
+        </select>
+        <p for="TbAmount" id="storageLabel">placeholder</p>
+        <br />
+        <input
+          type="checkbox"
+          id="AIinput"
+          name="AIinput"
+          value="AI"
+          oninput="calculatePrice()"
+        />
+        <label for="AIinput">Žmogaus ir automobilio aptikimo funkcija</label>
+        <br />
+        <input
+          type="checkbox"
+          id="ColorInput"
+          name="ColorInput"
+          value="Color"
+          oninput="calculatePrice()"
+        />
+        <label for="ColorInput">Spalvotas naktinis matymas</label>
+        <!-- <br />
+        <input
+          type="checkbox"
+          id="isLocalInput"
+          name="isLocalInput"
+          value="isLocalInput"
+          oninput="calculatePrice()"
+          checked
+        />
+        <label for="isLocalInput">Ar esate is Klaipedos</label>
+
+        <div id="stulpaiInputDiv">
+          <select id="stulpaiInput"></select>
+          <label for="stulpaiInput">Kiek kameru bus ant stulpu</label>
+        </div> -->
+      </form>
+      <h2 id="result">0</h2>
+      <script src="calculator.js"></script>
+    </div>
   </body>
 </html>
