@@ -3,8 +3,8 @@
   <head>
     <link rel="stylesheet" href="calculator.css" />
   </head>
-  <body>
-    <div onload="calculatePrice()">
+  <body onload="calculatePrice()">
+    <div >
       <h1 id="headingCCTVCalculator">
         Vaizdo stebėjimo kamerų kainos skaičiuoklė
       </h1>
@@ -99,7 +99,72 @@
           <label for="stulpaiInput">Kiek kameru bus ant stulpu</label>
         </div> -->
       </form>
+
+    <div id="samata">
+      <table>
+        <tr>
+          <th class="cellLeft">Pavadinimas</th>
+          <th>Kiekis</th>
+          <th>Kaina</th>
+          <th>Viso</th>
+        </tr>
+        <tr>
+          <td>Vaizdo kamera</td>
+          <td id="cameraAmountSamata" class="cellCentre">0 vnt</td>
+          <td id="cameraPriceSamata" class="cellCentre">0 €</td>
+          <td id="cameraTotalSamata" class="cellCentre">0 €</td>
+        </tr>
+        <tr>
+          <td>Vaizdo kameros kronšteinas</td>
+          <td id="cameraMountAmountSamata" class="cellCentre">0 vnt</td>
+          <td id="cameraMountPriceSamata" class="cellCentre">0 €</td>
+          <td id="cameraMountTotalSamata" class="cellCentre">0 €</td>
+        </tr>
+        <tr id="NVRRow">
+          <td >Vaizdo įrašymo įrenginys</td>
+          <td id="NVRAmountSamata" class="cellCentre">0 vnt</td>
+          <td id="NVRPriceSamata" class="cellCentre">0 €</td>
+          <td id="NVRTotalSamata" class="cellCentre">0 €</td>
+        </tr>
+        <tr>
+          <td>FTP 6 kategorijos signalinis kabelis</td>
+          <td id="cableAmountSamata" class="cellCentre">0 m</td>
+          <td id="cablePriceSamata" class="cellCentre">0 €</td>
+          <td id="cableTotalSamata" class="cellCentre">0 €</td>
+        </tr>
+        <tr>
+          <td>Įrašo saugojimo laikmena</td>
+          <td id="storageAmountSamata" class="cellCentre">0 Tb</td>
+          <td id="storagePriceSamata" class="cellCentre">0 €</td>
+          <td id="storageTotalSamata" class="cellCentre">0 €</td>
+        </tr>
+        <tr id="boxRow">
+          <td >Metalinė spinta vaizdo stebėjimo įrangai</td>
+          <td id="boxAmountSamata" class="cellCentre">0 vnt</td>
+          <td id="boxPriceSamata" class="cellCentre">0 €</td>
+          <td id="boxTotalSamata" class="cellCentre">0 €</td>
+        </tr>
+        <tr>
+          <td>Papildomos tvirtinimo medžiagos ir išlaidos</td>
+          <td id="additionalAmountSamata" class="cellCentre">0 vnt</td>
+          <td id="additionalPriceSamata" class="cellCentre">0 €</td>
+          <td id="additionalTotalSamata" class="cellCentre">0 €</td>
+        </tr>
+        <tr>
+          <td>Kabelių klojimo darbai</td>
+          <td id="cableWorkAmountSamata" class="cellCentre">0 vnt</td>
+          <td id="cableWorkPriceSamata" class="cellCentre">0 €</td>
+          <td id="cableWorkTotalSamata" class="cellCentre">0 €</td>
+        </tr>
+        <tr>
+          <td>Montavimo, derinimo, programavimo, paleidimo darbai</td>
+          <td id="cameraWorkAmountSamata" class="cellCentre">0 vnt</td>
+          <td id="cameraWorkPriceSamata" class="cellCentre">0 €</td>
+          <td id="cameraWorkTotalSamata" class="cellCentre">0 €</td>
+        </tr>
+      </table>
       <h2 id="result">0</h2>
+    </div>
       <script src="calculator.js"></script>
     </div>
   </body>

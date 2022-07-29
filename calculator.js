@@ -30,9 +30,9 @@ const days2MpxCamera32Gb = 2;
 const days4MpxCamera32Gb = 1;
 const days8MpxCamera32Gb = 0.25;
 
-var formatter = new Intl.NumberFormat('en-US', {
-  style: 'currency',
-  currency: 'EUR',
+var formatter = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "EUR",
 
   // These options are needed to round to whole numbers if that's what you want.
   //minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
@@ -117,22 +117,39 @@ function calculatePrice() {
         break;
     }
     console.log("Camera", i + 1, "price", singleCameraPrice);
-    finalPrice += singleCameraPrice;
 
-    //Cable lenght price calculation
-    let singleCameraCablePrice = 0;
-    singleCameraCablePrice += camera[i].cableLenght * cablePrice;
-    console.log("camera", i + 1, "cable price", singleCameraCablePrice);
-    finalPrice += singleCameraCablePrice;
-    //TOUSE total cable used in m.
-    //totalCableUsed += camera[i].cableLenght
+    // samata calculate cameras
+    cameraAmountSamata.innerText = i + 1 + " vnt";
+    cameraPriceSamata.innerText = formatter.format(singleCameraPrice);
+    cameraTotalSamata.innerText = formatter.format(singleCameraPrice * (i + 1));
+    finalPrice += singleCameraPrice;
 
     //mounting base price
     let singleCameraMountPrice = 0;
     singleCameraMountPrice += camera[i].hasMounting == true ? mountPrice : 0;
     console.log("Camera", i + 1, "mount price", singleCameraMountPrice);
+    //add to html
+    cameraMountPriceSamata.innerText = formatter.format(singleCameraMountPrice);
     finalPrice += singleCameraMountPrice;
+
+    cameraMountAmountSamata.innerText = i + 1 + " vnt";
+    cameraMountPriceSamata.innerText = formatter.format(singleCameraMountPrice);
+    cameraMountTotalSamata.innerText = formatter.format(
+      singleCameraMountPrice * (i + 1)
+    );
   }
+
+  //Cable lenght price calculation
+  let totalCablePrice = 0;
+  totalCablePrice += cableLenght * cablePrice;
+  console.log("cable price", totalCablePrice);
+  finalPrice += totalCablePrice;
+  //TOUSE total cable used in m.
+  //totalCableUsed += camera[i].cableLenght
+  cableAmountSamata.innerText = cableLenght + " m";
+  cablePriceSamata.innerText = formatter.format(cablePrice);
+  cableTotalSamata.innerText = formatter.format(cablePrice * cableLenght);
+
   //work price minimum 120eur check
   let finalWorkPrice = cameraCount * minWorkPrice;
   //add price for installing NVR if 2 or more cameras
@@ -141,6 +158,10 @@ function calculatePrice() {
   }
   finalPrice += finalWorkPrice;
   console.log("Work price", finalWorkPrice);
+
+  cameraWorkAmountSamata.innerText = "1 vnt";
+  cameraWorkPriceSamata.innerText = formatter.format(finalWorkPrice);
+  cameraWorkTotalSamata.innerText = formatter.format(finalWorkPrice);
 
   //calculate NVR Price
   let NVRPrice = 0;
@@ -158,16 +179,27 @@ function calculatePrice() {
   console.log("Nvr price", NVRPrice);
   finalPrice += NVRPrice;
 
+  NVRAmountSamata.innerText = NVRPrice == 0 ? "0 vnt" : "1 vnt";
+  NVRPriceSamata.innerText = formatter.format(NVRPrice);
+  NVRTotalSamata.innerText = formatter.format(NVRPrice);
+  (NVRPrice == 0) ? NVRRow.hidden = true : NVRRow.hidden = false
+
   //calculate TB Price if more than 1 camera
   if (cameraCount > 1) {
     let TbPrice = hardTbPrice * TbAmount.value;
     console.log("Terabaitu kaina", TbPrice);
     finalPrice += TbPrice;
+
+    storageAmountSamata.innerText = TbAmount.value + " Tb";
+    storagePriceSamata.innerText = formatter.format(hardTbPrice);
+    storageTotalSamata.innerText = formatter.format(TbPrice);
+
   }
 
   //storage days calculation Tb
-  function changeStorageLabel (storageDays) {
-    storageLabel.innerText = "Įrašo saugojimo dienų kiekis: " + Math. floor(storageDays);
+  function changeStorageLabel(storageDays) {
+    storageLabel.innerText =
+      "Įrašo saugojimo dienų kiekis: " + Math.floor(storageDays);
   }
   function calculateDaysTb() {
     let storageDays = 0;
@@ -221,10 +253,18 @@ function calculatePrice() {
   console.log("Tvirtinimo medziagos", tvirtinimas);
   finalPrice += tvirtinimas;
 
+  additionalAmountSamata.innerText = "1 vnt";
+  additionalPriceSamata.innerText = formatter.format(tvirtinimas);
+  additionalTotalSamata.innerText = formatter.format(tvirtinimas);
+
   //laidu klojimo darbai
   let laiduDarbai = cableLenght * cameraCount;
   console.log("laidu klojimo darbai", laiduDarbai);
   finalPrice += laiduDarbai;
+
+  cableWorkAmountSamata.innerText = "1 vnt";
+  cableWorkPriceSamata.innerText = formatter.format(laiduDarbai);
+  cableWorkTotalSamata.innerText = formatter.format(laiduDarbai);
 
   // //Transporto islaidos, Klaipeda ar ne
   // isLocal = isLocalInput.checked;
@@ -241,6 +281,10 @@ function calculatePrice() {
     sdCardCost = sdCardGBPrice * GbAmount.value;
     console.log("SD card price", sdCardCost);
     finalPrice += sdCardCost;
+
+    storageAmountSamata.innerText = GbAmount.value + " Gb";
+    storagePriceSamata.innerText = formatter.format(sdCardGBPrice);
+    storageTotalSamata.innerText = formatter.format(sdCardCost);
   } else {
     //   hide sd card sselector
     GbAmount.hidden = true;
@@ -255,6 +299,11 @@ function calculatePrice() {
   }
   console.log("Serverine metaline spinta:", spintaPrice);
   finalPrice += spintaPrice;
+
+  boxAmountSamata.innerText = "1 vnt";
+  boxPriceSamata.innerText = formatter.format(spintaPrice);
+  boxTotalSamata.innerText = formatter.format(spintaPrice);
+  (spintaPrice == 0) ? boxRow.hidden = true : boxRow.hidden = false
 
   // //TODO add option to select stulpiniai kronsteinai
   // const stulpaiElement = document.getElementById("stulpaiInput");

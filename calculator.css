@@ -32,3 +32,11 @@ div:focus-within::after {
 .percent::after {
   content: "%";
 }
+
+.cellCentre {
+    text-align: center;
+}
+
+.cellLeft {
+    text-align: left;
+}
