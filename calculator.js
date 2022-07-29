@@ -182,7 +182,7 @@ function calculatePrice() {
   NVRAmountSamata.innerText = NVRPrice == 0 ? "0 vnt" : "1 vnt";
   NVRPriceSamata.innerText = formatter.format(NVRPrice);
   NVRTotalSamata.innerText = formatter.format(NVRPrice);
-  (NVRPrice == 0) ? NVRRow.hidden = true : NVRRow.hidden = false
+  NVRPrice == 0 ? (NVRRow.hidden = true) : (NVRRow.hidden = false);
 
   //calculate TB Price if more than 1 camera
   if (cameraCount > 1) {
@@ -193,7 +193,6 @@ function calculatePrice() {
     storageAmountSamata.innerText = TbAmount.value + " Tb";
     storagePriceSamata.innerText = formatter.format(hardTbPrice);
     storageTotalSamata.innerText = formatter.format(TbPrice);
-
   }
 
   //storage days calculation Tb
@@ -258,19 +257,13 @@ function calculatePrice() {
   additionalTotalSamata.innerText = formatter.format(tvirtinimas);
 
   //laidu klojimo darbai
-  let laiduDarbai = cableLenght * cameraCount;
+  let laiduDarbai = cableLenght;
   console.log("laidu klojimo darbai", laiduDarbai);
   finalPrice += laiduDarbai;
 
   cableWorkAmountSamata.innerText = "1 vnt";
   cableWorkPriceSamata.innerText = formatter.format(laiduDarbai);
   cableWorkTotalSamata.innerText = formatter.format(laiduDarbai);
-
-  // //Transporto islaidos, Klaipeda ar ne
-  // isLocal = isLocalInput.checked;
-  // let transportCost = isLocal == true ? 20 : 50;
-  // console.log("Transporto islaidos", transportCost);
-  // finalPrice += transportCost;
 
   //If 1 camera let select sd card, also hide Tb option and show Gb selector. And vice versa
   let sdCardCost = 0;
@@ -303,23 +296,9 @@ function calculatePrice() {
   boxAmountSamata.innerText = "1 vnt";
   boxPriceSamata.innerText = formatter.format(spintaPrice);
   boxTotalSamata.innerText = formatter.format(spintaPrice);
-  (spintaPrice == 0) ? boxRow.hidden = true : boxRow.hidden = false
+  spintaPrice == 0 ? (boxRow.hidden = true) : (boxRow.hidden = false);
 
-  // //TODO add option to select stulpiniai kronsteinai
-  // const stulpaiElement = document.getElementById("stulpaiInput");
-  // stulpaiElement.innerHTML = "";
-  // for (i = 0; i < cameraCount; i++) {
-  //   const stulpaiOption = document.createElement("option");
-  //   const stulpaiNode = document.createTextNode(i + 1);
-  //   stulpaiOption.appendChild(stulpaiNode);
-  //   stulpaiOption.value = i + 1;
-  //   // console.log(stulpaiOption.value);
-  //   stulpaiElement.appendChild(stulpaiOption);
-  // }
-
-  // //calculate stulpai price
-  // //TODO STOP REGENERATION OF STULPAI SELECTOR WHEN CLICKING ON IT
-  // console.log(stulpaiInput.value);
+ 
 
   //final price results
   console.log(finalPrice);
