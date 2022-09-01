@@ -302,9 +302,9 @@ function calculatePrice() {
   console.log(finalPrice);
   console.log("-----------------------------------------------------");
   if (cameraCount <= 32) {
-    result.innerText = formatter.format(finalPrice);
+    result.textContent = formatter.format(finalPrice);
   } else {
-    result.innerText = `Too many cameras, please call for individual price`;
+    result.textContent = `Too many cameras, please call for individual price`;
   }
 
   //change image

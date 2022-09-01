@@ -92,6 +92,25 @@
           oninput="calculatePrice()"
         />
         <label for="ColorInput">Spalvotas naktinis matymas</label>
+
+        <input
+          type="checkbox"
+          id="SoundInput"
+          name="SoundInput"
+          value="Sound"
+          oninput="calculatePrice()"
+        />
+        <label for="SoundInput">Garso irasymas ir garsiakalbis </label>
+        <input
+          type="checkbox"
+          id="AlarmInput"
+          name="AlarmInput"
+          value="Alarm"
+          oninput="calculatePrice()"
+        />
+        <label for="AlarmInput"
+          >Kamera su garso ir sviesos signalizacija
+        </label>
       </form>
 
       <div id="samata">
@@ -163,11 +182,10 @@
             <td><h2 id="result">0</h2></td>
           </tr>
         </table>
-        <h2 id="result">0</h2>
       </div>
       <br />
       <div id="cameraImageDiv">
-        <img id="cameraImage" src="resources/cameraBasicDome.png" width="500" />
+        <img id="cameraImage" width="500" />
       </div>
       <script src="calculator.js"></script>
     </div>
