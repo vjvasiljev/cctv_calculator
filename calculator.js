@@ -298,8 +298,6 @@ function calculatePrice() {
   boxTotalSamata.innerText = formatter.format(spintaPrice);
   spintaPrice == 0 ? (boxRow.hidden = true) : (boxRow.hidden = false);
 
- 
-
   //final price results
   console.log(finalPrice);
   console.log("-----------------------------------------------------");
@@ -308,4 +306,18 @@ function calculatePrice() {
   } else {
     result.innerText = `Too many cameras, please call for individual price`;
   }
+
+  //change image
+  console.log(AIinput.checked, ColorInput.checked);
+  let imageNameText = "camera";
+  if (AIinput.checked == true) {
+    //basic camera image
+    imageNameText += "AI";
+  }
+  if (ColorInput.checked == true) {
+    imageNameText += "Color";
+  }
+  //temp  dome
+  imageNameText += "Dome";
+  cameraImage.src = "resources/" + imageNameText + ".png";
 }
