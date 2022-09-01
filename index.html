@@ -65,6 +65,15 @@
           </option>
         </select>
         <p for="TbAmount" id="storageLabel">placeholder</p>
+        <!-- Kameru forma -->
+        <label for="cameraShape">Kameros forma</label>
+
+        <select name="cameraShape" id="cameraShape" oninput="calculatePrice()">
+          <option value="Bullet">Cilindrine Bullet kamera</option>
+          <option value="Dome">Kupoline Dome kamera</option>
+          <option value="Glass">Kamera su stikliuku</option>
+          <!-- <option value="PTZ">Valdoma kamera</option> -->
+        </select>
 
         <input
           type="checkbox"

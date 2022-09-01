@@ -318,6 +318,6 @@ function calculatePrice() {
     imageNameText += "Color";
   }
   //temp  dome
-  imageNameText += "Dome";
+  imageNameText += cameraShape.value;
   cameraImage.src = "resources/" + imageNameText + ".png";
 }
