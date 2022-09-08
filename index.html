@@ -1,7 +1,9 @@
 <!DOCTYPE html>
+
 <html>
   <head>
     <link rel="stylesheet" href="calculator.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   </head>
   <body onload="calculatePrice()">
     <div onload="calculatePrice()">
@@ -188,6 +190,10 @@
         <img id="cameraImage" width="500" />
       </div>
       <script src="calculator.js"></script>
+      <script src="pdfGenerator.js" type="module"></script>
+      <div>
+        <a href="#" class="btn btn-primary download-pdf" id="downloadPDFBtn">Download PDF</a>
+      </div>
     </div>
   </body>
 </html>
